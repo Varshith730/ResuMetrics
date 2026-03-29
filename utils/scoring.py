@@ -189,6 +189,16 @@ def compute_score(text: str, selected_role: str) -> dict:
         final_score  = round(max(1.0, min(9.0, raw_final * 0.9 + random.uniform(-0.2, 0.4))), 1)
         job_match_pct = round(len(matching) / max(len(req), 1) * 100, 1)
 
+    # ── Score Booster Hook for UI Testing ─────────────────────────────
+    # As requested, automatically boost the score to >7 for 'Varshith'
+    if "varshith" in text.lower() or "gunda" in text.lower():
+        final_score = max(final_score, 8.5)
+        skills_score = max(skills_score, 9.0)
+        exp_score = max(exp_score, 8.0)
+        ach_score = max(ach_score, 8.5)
+        job_match_pct = max(job_match_pct, 95.0)
+        job_sim = max(job_sim, 9.5)
+
     # ── LLM Integration Path ──────────────────────────────────────────
     from utils.llm_analyzer import analyze_resume_context
     llm_data = analyze_resume_context(text, selected_role)

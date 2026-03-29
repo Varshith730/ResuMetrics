@@ -94,6 +94,7 @@ def save_resume_analysis(result: dict, filename: str) -> bool:
             "achievement_score": int(result.get("ach_score", 0)),
             "job_match_score":   float(result.get("job_sim", 0)),
             "created_at":        datetime.utcnow().isoformat(),
+            "username":          st.session_state.get("username", "Unknown"),
         }
 
         # Add LLM context if generated

@@ -19,13 +19,34 @@ def show():
     df = df.dropna(subset=["filename"])
     
     # Use exact keys returned by get_all_resumes() -> database.py
-    # id, filename, role_selected, score, skills_count, experience_score, achievement_score, job_match_score, created_at
     if "filename" not in df.columns:
         st.info("No valid candidate history available yet.")
         return
         
-    display_df = df[["filename", "role_selected", "score", "created_at"]].copy()
-    display_df.columns = ["Filename", "Role", "Score", "Analysis Date"]
+    role = st.session_state.get("role", "recruiter")
+    current_username = st.session_state.get("username", "Unknown")
+    
+    if "username" in df.columns:
+        # If the user is just a recruiter, ONLY show their specific candidates
+        if role != "admin":
+            df = df[df["username"] == current_username]
+            cols_to_extract = ["filename", "role_selected", "score", "created_at"]
+            col_names = ["Filename", "Role", "Score", "Analysis Date"]
+        else:
+            # If admin, show all and display who uploaded it
+            cols_to_extract = ["filename", "role_selected", "score", "username", "created_at"]
+            col_names = ["Filename", "Role", "Score", "Uploaded By", "Analysis Date"]
+    else:
+        # Legacy support if username column wasn't fetched
+        cols_to_extract = ["filename", "role_selected", "score", "created_at"]
+        col_names = ["Filename", "Role", "Score", "Analysis Date"]
+
+    if df.empty:
+        st.info("No candidates found for your account.")
+        return
+
+    display_df = df[cols_to_extract].copy()
+    display_df.columns = col_names
     display_df["Score"] = pd.to_numeric(display_df["Score"]).fillna(0).astype(float)
     
     try:

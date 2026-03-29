@@ -39,6 +39,7 @@ def gauge_chart(score: float, max_score: float = 9.0) -> go.Figure:
         height=280, margin=dict(t=40, b=20, l=30, r=30),
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font={"family": "Inter"},
+        hoverlabel=dict(bgcolor="white", font_size=12, font_family="Inter", font_color="#0A2342"),
     )
     return fig
 
@@ -61,6 +62,7 @@ def score_breakdown_bar(scores: dict) -> go.Figure:
                    tickfont={"size": 11}, zeroline=False),
         yaxis=dict(tickfont={"size": 12, "color": "#374151"}),
         showlegend=False, font={"family": "Inter"},
+        hoverlabel=dict(bgcolor="white", font_size=12, font_family="Inter", font_color="#0A2342"),
     )
     return fig
 
@@ -82,6 +84,7 @@ def skill_match_bar(matching: list, missing: list) -> go.Figure:
         margin=dict(t=40, b=10, l=10, r=10),
         font={"family": "Inter"},
         yaxis=dict(showgrid=True, gridcolor="#F1F5F9"),
+        hoverlabel=dict(bgcolor="white", font_size=12, font_family="Inter", font_color="#0A2342"),
     )
     return fig
 
@@ -105,6 +108,7 @@ def feature_importance_chart(features: list, importance: list) -> go.Figure:
         xaxis=dict(tickformat=".0%", showgrid=True, gridcolor="#F1F5F9", zeroline=False),
         yaxis=dict(tickfont={"size": 11}),
         font={"family": "Inter"},
+        hoverlabel=dict(bgcolor="white", font_size=12, font_family="Inter", font_color="#0A2342"),
     )
     return fig
 
@@ -122,5 +126,6 @@ def score_distribution_chart(scores: list) -> go.Figure:
         xaxis=dict(title="Score", range=[1, 9], showgrid=True, gridcolor="#F1F5F9"),
         yaxis=dict(title="Count", showgrid=True, gridcolor="#F1F5F9"),
         font={"family": "Inter", "size": 11},
+        hoverlabel=dict(bgcolor="white", font_size=12, font_family="Inter", font_color="#0A2342"),
     )
     return fig

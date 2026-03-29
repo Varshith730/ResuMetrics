@@ -189,6 +189,17 @@ def show():
 
                 # Actually parse the resume text
                 text = parse_resume_text(uploaded)
+                
+                # If the fallback demo resume is still being loaded from a warm module cache, force wipe it:
+                if "JOHN A. SMITH" in text:
+                    text = ""
+
+                # Validate the parsed text to ensure it's likely a real resume
+                from utils.resume_parser import extract_skills
+                if len(text.strip()) < 150 or (len(extract_skills(text)) == 0 and "experience" not in text.lower() and "education" not in text.lower()):
+                    anim_placeholder.empty()
+                    st.error("⚠️ The uploaded document doesn't appear to be a comprehensive resume. Please upload a valid, readable resume (PDF/DOCX) with sufficient text.")
+                    st.stop()
 
                 # Run AI scoring
                 result = _cached_score(file_hash, role, text, cache_buster=2)
@@ -225,6 +236,11 @@ def show():
                 else:
                     st.success("✅  AI Analysis complete! Navigate to **Candidate Scoring** in the sidebar.")
                     st.warning("⚠️  Could not save to Supabase. Check the terminal for error details.")
+                
+                # ── High Score Celebrations ───────────────────────────
+                if result.get("final_score", 0) >= 7.0:
+                    st.balloons()
+                    st.toast(f"🎉 HIGHLY RECOMMENDED HIRE! Outstanding match for {role}.", icon="🔥")
 
                 # ── Model badge ───────────────────────────────────────
                 model_used = result.get("model_used", "")

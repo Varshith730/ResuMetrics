@@ -25,6 +25,22 @@ def show():
         return
 
     r = st.session_state["result"]
+
+    # ── Hire Recommendation Banner ──
+    if r.get("final_score", 0) >= 7.0:
+        st.markdown(f"""
+        <div style="background:linear-gradient(135deg, #059669, #10B981);
+                    padding:16px 20px;border-radius:12px;color:#FFFFFF !important;
+                    display:flex;align-items:center;gap:12px;margin-bottom:20px;
+                    box-shadow:0 4px 15px rgba(16, 185, 129, 0.3);">
+            <div style="font-size:32px;">🌟</div>
+            <div>
+                <div style="font-size:16px;font-weight:900;letter-spacing:0.5px;color:#FFFFFF !important;">HIRE RECOMMENDATION: EXCELLENT</div>
+                <div style="font-size:13px;color:#FFFFFF !important;opacity:0.95;">This candidate strongly aligns with the <strong>{r.get('selected_role', 'role')}</strong> requirements and is highly recommended for progression.</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
     label, color = score_label(r["final_score"])
     badge_class = {
         "Excellent": "badge-excellent", "Good": "badge-good",

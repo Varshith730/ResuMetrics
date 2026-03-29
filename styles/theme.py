@@ -187,10 +187,25 @@ def apply_theme():
         border: 2px dashed #93C5FD;
         padding: 20px;
     }
+    [data-testid="stFileUploader"] button {
+        color: white !important;
+        border: 1px solid rgba(255,255,255,0.2) !important;
+    }
 
     /* Select box */
     .stSelectbox div[data-baseweb="select"] {
         border-radius: 8px;
+    }
+    .stSelectbox div[data-baseweb="select"] * {
+        color: white !important;
+    }
+    
+    /* Dropdown list popover */
+    div[data-baseweb="popover"] {
+        background-color: #1A3A5C !important;
+    }
+    div[data-baseweb="popover"], div[data-baseweb="popover"] *, ul[role="listbox"] li {
+        color: white !important;
     }
 
     /* Hide Streamlit menu */

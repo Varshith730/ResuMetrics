@@ -89,13 +89,24 @@ def show():
         transition: all 0.2s ease !important;
         box-shadow: 0 4px 20px rgba(26,115,232,0.4) !important;
     }
+    .stButton button p {
+        color: white !important;
+    }
     .stButton button:hover {
         transform: translateY(-1px) !important;
         box-shadow: 0 8px 24px rgba(26,115,232,0.5) !important;
     }
 
     /* Error / warn messages */
-    .stAlert { border-radius: 10px !important; }
+    [data-testid="stAlert"] {
+        border-radius: 10px !important;
+        background-color: rgba(239, 68, 68, 0.2) !important;
+        border: 1px solid rgba(239, 68, 68, 0.4) !important;
+        backdrop-filter: blur(10px);
+    }
+    [data-testid="stAlert"] * {
+        color: white !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 

@@ -118,48 +118,43 @@ def show():
             for iss in risks if iss["severity"] == "High"
         )
 
-        st.markdown(f"""
-        <div style="background:white;border-radius:14px;padding:32px;
-                    box-shadow:0 4px 20px rgba(10,35,66,0.10);
-                    border-top:5px solid #1A73E8;">
-            <div style="text-align:center;margin-bottom:24px;">
-                <div style="font-size:11px;font-weight:700;color:#94A3B8;
-                            text-transform:uppercase;letter-spacing:1px;">AI Resume Intelligence Platform</div>
-                <div style="font-size:22px;font-weight:800;color:#0A2342;margin:8px 0;">
-                    Candidate Evaluation Report
-                </div>
-                <div style="font-size:12px;color:#94A3B8;">Confidential — Internal HR Use</div>
-            </div>
-            <hr style="border:none;border-top:1px solid #E2E8F0;margin:18px 0;">
-
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;text-align:center;">
-                <div style="padding:14px;background:#F8FAFC;border-radius:10px;">
-                    <div style="font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;">Final Score</div>
-                    <div style="font-size:28px;font-weight:900;color:{color};">{r['final_score']}/9</div>
-                    <div style="font-size:11px;color:{color};font-weight:600;">{label}</div>
-                </div>
-                <div style="padding:14px;background:#F8FAFC;border-radius:10px;">
-                    <div style="font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;">Job Match</div>
-                    <div style="font-size:28px;font-weight:900;color:#1A73E8;">{r['job_match_pct']:.0f}%</div>
-                    <div style="font-size:11px;color:#64748B;">{r['selected_role']}</div>
-                </div>
-                <div style="padding:14px;background:#F8FAFC;border-radius:10px;">
-                    <div style="font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;">Experience</div>
-                    <div style="font-size:28px;font-weight:900;color:#8B5CF6;">{r['exp_years']:.0f}y</div>
-                    <div style="font-size:11px;color:#64748B;">Professional</div>
-                </div>
-            </div>
-
-            <div style="margin-bottom:16px;">
-                <div style="font-size:12px;font-weight:700;color:#065F46;margin-bottom:8px;">✅ Strengths</div>
-                {strengths_html if strengths_html else '<span style="color:#94A3B8;font-size:12px;">—</span>'}
-            </div>
-            <div style="margin-bottom:16px;">
-                <div style="font-size:12px;font-weight:700;color:#991B1B;margin-bottom:6px;">⚠ Key Risks</div>
-                {weaknesses_html if weaknesses_html else '<div style="font-size:12px;color:#10B981;">No high-severity risks detected.</div>'}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        import re
+        html_str = re.sub(r"^\s+", "", f"""
+<div style="background:white;border-radius:14px;padding:32px;box-shadow:0 4px 20px rgba(10,35,66,0.10);border-top:5px solid #1A73E8;">
+<div style="text-align:center;margin-bottom:24px;">
+<div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:1px;">AI Resume Intelligence Platform</div>
+<div style="font-size:22px;font-weight:800;color:#0A2342;margin:8px 0;">Candidate Evaluation Report</div>
+<div style="font-size:12px;color:#94A3B8;">Confidential — Internal HR Use</div>
+</div>
+<hr style="border:none;border-top:1px solid #E2E8F0;margin:18px 0;">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;text-align:center;">
+<div style="padding:14px;background:#F8FAFC;border-radius:10px;">
+<div style="font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;">Final Score</div>
+<div style="font-size:28px;font-weight:900;color:{color};">{r['final_score']}/9</div>
+<div style="font-size:11px;color:{color};font-weight:600;">{label}</div>
+</div>
+<div style="padding:14px;background:#F8FAFC;border-radius:10px;">
+<div style="font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;">Job Match</div>
+<div style="font-size:28px;font-weight:900;color:#1A73E8;">{r['job_match_pct']:.0f}%</div>
+<div style="font-size:11px;color:#64748B;">{r['selected_role']}</div>
+</div>
+<div style="padding:14px;background:#F8FAFC;border-radius:10px;">
+<div style="font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;">Experience</div>
+<div style="font-size:28px;font-weight:900;color:#8B5CF6;">{r['exp_years']:.0f}y</div>
+<div style="font-size:11px;color:#64748B;">Professional</div>
+</div>
+</div>
+<div style="margin-bottom:16px;">
+<div style="font-size:12px;font-weight:700;color:#065F46;margin-bottom:8px;">✅ Strengths</div>
+{strengths_html if strengths_html else '<span style="color:#94A3B8;font-size:12px;">—</span>'}
+</div>
+<div style="margin-bottom:16px;">
+<div style="font-size:12px;font-weight:700;color:#991B1B;margin-bottom:6px;">⚠ Key Risks</div>
+{weaknesses_html if weaknesses_html else '<div style="font-size:12px;color:#10B981;">No high-severity risks detected.</div>'}
+</div>
+</div>
+        """, flags=re.MULTILINE)
+        st.markdown(html_str, unsafe_allow_html=True)
 
     with col_action:
         st.markdown('<div class="section-header">Download Options</div>', unsafe_allow_html=True)

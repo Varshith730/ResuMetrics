@@ -23,7 +23,7 @@ def parse_resume_text(uploaded_file) -> str:
             text = "\n".join([p.text for p in doc.paragraphs])
         except Exception:
             text = "[Could not parse DOCX – demo mode active]"
-    return text.strip() if text.strip() else generate_demo_resume()
+    return text.strip()
 
 
 def generate_demo_resume() -> str:
