@@ -168,6 +168,15 @@ def show():
                 else:
                     st.error(f"❌ Login Failed: {err_msg}")
 
+        st.markdown("<div style='margin-top: 12px;'></div>", unsafe_allow_html=True)
+        
+        if st.button("🚀  Demo Login", key="demo_login_btn", use_container_width=True):
+            st.session_state["authenticated"] = True
+            st.session_state["role"] = "recruiter"
+            st.session_state["username"] = "Demo User"
+            st.session_state.setdefault("active_page", "overview")
+            st.rerun()
+
         st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown("""
