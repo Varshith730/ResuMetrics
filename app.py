@@ -40,6 +40,15 @@ if st.session_state["active_page"] == "landing":
                 padding-bottom: 10px !important;
                 letter-spacing: -1.5px;
             }
+            /* Force button text to white and bold */
+            div[data-testid="stButton"] button[kind="primary"] {
+                color: #FFFFFF !important;
+                font-weight: 800 !important;
+            }
+            div[data-testid="stButton"] button[kind="primary"] p {
+                color: #FFFFFF !important;
+                font-weight: 800 !important;
+            }
         </style>
         <div style='text-align: center; padding: 60px 20px 20px 20px;'>
             <div style='font-size: 80px; margin-bottom: 10px;'>🧠</div>
