@@ -21,6 +21,34 @@ st.set_page_config(
 
 apply_theme()
 
+# ── Landing Page ───────────────────────────────────────────────────────────
+if "active_page" not in st.session_state:
+    st.session_state["active_page"] = "landing"
+
+if st.session_state["active_page"] == "landing":
+    st.markdown("""
+        <div style='text-align: center; padding: 80px 20px; background: linear-gradient(135deg,#1A73E8,#0D47A1); border-radius: 16px; color: white; margin-top: 40px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(13,71,161,0.3);'>
+            <div style='font-size: 72px; margin-bottom: 20px;'>🧠</div>
+            <h1 style='color: white; font-size: 3.5em; margin-bottom: 10px; font-weight: 800; letter-spacing: -1px;'>ResuMetrics</h1>
+            <p style='font-size: 1.2em; color: #E2E8F0; max-width: 600px; margin: 0 auto 40px auto; line-height: 1.6;'>
+                Enterprise AI-Powered Resume Intelligence Platform.<br>Score, analyze, and align candidate resumes with unprecedented precision.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns([1, 1.5, 1])
+    with col2:
+        if st.button("🚀 Check it out", use_container_width=True, type="primary"):
+            st.session_state["active_page"] = "overview"
+            st.rerun()
+            
+    st.markdown("""
+        <div style="margin-top:60px;font-size:12px;color:#64748B;text-align:center;">
+            v2.4.1 · Enterprise Edition<br>© 2026 ResuMetrics Inc.
+        </div>
+    """, unsafe_allow_html=True)
+    st.stop()
+
 # ── Sidebar ────────────────────────────────────────────────────────────────
 role = st.session_state.get("role", "admin")
 username = st.session_state.get("username", "Public User")
@@ -78,9 +106,6 @@ with st.sidebar:
     NAV_ITEMS = dict(BASE_NAV)
     if role == "admin":
         NAV_ITEMS.update(ADMIN_NAV)
-
-    if "active_page" not in st.session_state:
-        st.session_state["active_page"] = "overview"
 
     for label, key in NAV_ITEMS.items():
         is_active = st.session_state["active_page"] == key
