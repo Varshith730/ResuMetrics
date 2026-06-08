@@ -9,7 +9,6 @@ import pages.analytics        as pg_analytics
 import pages.report           as pg_report
 import pages.admin_dashboard  as pg_admin
 import pages.history          as pg_history
-import pages.login            as pg_login
 
 
 # ── Page config ────────────────────────────────────────────────────────────
@@ -22,14 +21,9 @@ st.set_page_config(
 
 apply_theme()
 
-# ── Auth gate ──────────────────────────────────────────────────────────────
-if not st.session_state.get("authenticated", False):
-    pg_login.show()
-    st.stop()
-
 # ── Sidebar ────────────────────────────────────────────────────────────────
-role = st.session_state.get("role", "recruiter")
-username = st.session_state.get("username", "User")
+role = st.session_state.get("role", "admin")
+username = st.session_state.get("username", "Public User")
 
 with st.sidebar:
     # Logo / branding block
@@ -130,13 +124,7 @@ with st.sidebar:
         </div>
         """, unsafe_allow_html=True)
 
-    # ── Logout ────────────────────────────────────────────────────────────
-    st.markdown("<br>", unsafe_allow_html=True)
-    if st.button("🚪  Logout", key="logout_btn", use_container_width=True):
-        for k in ["authenticated", "role", "username", "result",
-                  "resume_text", "history", "active_page"]:
-            st.session_state.pop(k, None)
-        st.rerun()
+
 
     st.markdown("""
     <div style="margin-top:12px;font-size:9px;color:#3D6080;text-align:center;padding-bottom:10px;">
